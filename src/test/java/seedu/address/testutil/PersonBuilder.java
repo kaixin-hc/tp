@@ -8,6 +8,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -26,6 +27,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
+    private Remark remark;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -72,6 +74,13 @@ public class PersonBuilder {
         this.address = new Address(address);
         return this;
     }
+    /**
+     * Sets the {@code Remark} of the {@code Remark} that we are building.
+     */
+    public PersonBuilder withRemark(String remarkStub) {
+        this.remark = new Remark(remarkStub);
+        return this;
+    }
 
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
@@ -90,7 +99,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, tags, remark);
     }
 
 }
