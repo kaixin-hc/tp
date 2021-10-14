@@ -1,46 +1,45 @@
 package seedu.notor.logic.commands.person;
 
 import static seedu.notor.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.notor.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Set;
 
 import seedu.notor.commons.core.index.Index;
 import seedu.notor.logic.commands.CommandResult;
 import seedu.notor.logic.executors.exceptions.ExecuteException;
 import seedu.notor.logic.executors.person.PersonEditExecutor;
 import seedu.notor.logic.executors.person.PersonExecutor;
+import seedu.notor.logic.executors.person.PersonTagExecutor;
+import seedu.notor.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in Notor.
  */
-public class PersonEditCommand extends PersonCommand {
+public class PersonTagCommand extends PersonCommand {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "tag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds tags to the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] \n"
+            + "[" + PREFIX_TAG + "TAG]  \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_TAG + "important";
 
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_NOT_EDITED = "At least one tag must be provided.";
 
     private final PersonExecutor executor;
 
     /**
      * @param index Index of the person in the filtered person list to edit.
-     * @param personEditDescriptor Details to edit the person with.
+     * @param personTagDescriptor Details to edit the person with.
      */
-    public PersonEditCommand(Index index, PersonEditExecutor.PersonEditDescriptor personEditDescriptor) {
+    public PersonTagCommand(Index index, Set<Tag> tags) {
         super(index);
-        requireAllNonNull(index, personEditDescriptor);
-        this.executor = new PersonEditExecutor(index, personEditDescriptor);
+        requireAllNonNull(index, tags);
+        this.executor = new PersonTagExecutor(index, tags);
     }
 
     @Override
@@ -56,12 +55,12 @@ public class PersonEditCommand extends PersonCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonEditCommand)) {
+        if (!(other instanceof PersonTagCommand)) {
             return false;
         }
 
         // state check
-        PersonEditCommand e = (PersonEditCommand) other;
+        PersonTagCommand e = (PersonTagCommand) other;
         return super.equals(other) && executor.equals(e.executor);
     }
 }

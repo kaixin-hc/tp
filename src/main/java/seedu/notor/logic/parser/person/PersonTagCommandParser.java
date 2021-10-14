@@ -1,9 +1,6 @@
 package seedu.notor.logic.parser.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.notor.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.notor.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -14,24 +11,25 @@ import java.util.Set;
 import seedu.notor.commons.core.Messages;
 import seedu.notor.commons.core.index.Index;
 import seedu.notor.logic.commands.person.PersonEditCommand;
-import seedu.notor.logic.executors.person.PersonEditExecutor;
+import seedu.notor.logic.commands.person.PersonTagCommand;
+
 import seedu.notor.logic.parser.ArgumentMultimap;
 import seedu.notor.logic.parser.ArgumentTokenizer;
 import seedu.notor.logic.parser.ParserUtil;
 import seedu.notor.logic.parser.exceptions.ParseException;
 import seedu.notor.model.tag.Tag;
 
-public class PersonEditCommandParser extends PersonCommandParser {
+public class PersonTagCommandParser extends PersonCommandParser {
     /**
-     * Parses the given {@code String} of arguments in the context of the EditCommand
-     * and returns an EditCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the TagCommand
+     * and returns an PersonTagCommand object for execution.
      *
      * @throws ParseException if the user input does not conform the expected format
      */
-    public PersonEditCommand parse(String args) throws ParseException {
+    public PersonTagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_TAG);
 
         Index index;
 
@@ -42,22 +40,13 @@ public class PersonEditCommandParser extends PersonCommandParser {
                     String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, PersonEditCommand.MESSAGE_USAGE), pe);
         }
 
-        PersonEditExecutor.PersonEditDescriptor personEditDescriptor = new PersonEditExecutor.PersonEditDescriptor();
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            personEditDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            personEditDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            personEditDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-
-        if (!personEditDescriptor.isAnyFieldEdited()) {
+        if (!argMultimap.getValue(PREFIX_TAG).isPresent()) {
             throw new ParseException(PersonEditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new PersonEditCommand(index, personEditDescriptor);
+        Set<Tag> tagsToAdd = parseTags(argMultimap.getAllValues(PREFIX_TAG)).get();
+
+        return new PersonTagCommand(index, tagsToAdd);
     }
 
     /**
@@ -65,7 +54,7 @@ public class PersonEditCommandParser extends PersonCommandParser {
      * If {@code tags} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Tag>} containing zero tags.
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
+    private Optional<Set<Tag>> parseTags(Collection<String> tags) throws ParseException {
         assert tags != null;
 
         if (tags.isEmpty()) {

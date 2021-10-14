@@ -32,6 +32,17 @@ public class Person implements Unique<Person> {
     /**
      * Every field must be present and not null.
      */
+    public Person(Name name, Phone phone, Email email, Note note) {
+        requireAllNonNull(name, phone, email, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.note = note;
+    }
+
+    /**
+     * May create a person with tags
+     */
     public Person(Name name, Phone phone, Email email, Note note, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, tags);
         this.name = name;
@@ -71,10 +82,10 @@ public class Person implements Unique<Person> {
     public Note getNote() {
         return note;
     }
+
     public String getNoteSavedDate() {
         return note.getSavedDate();
     }
-
 
     public void addSuperGroup(SuperGroup superGroup) {
         superGroups.add(superGroup.toString());

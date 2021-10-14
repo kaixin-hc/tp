@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.notor.model.group.SubGroup;
 import seedu.notor.model.group.SuperGroup;
 import seedu.notor.model.person.Person;
+import seedu.notor.model.tag.Tag;
 import seedu.notor.model.util.UniqueList;
 
 /**
@@ -18,10 +19,9 @@ import seedu.notor.model.util.UniqueList;
 public class Notor implements ReadOnlyNotor {
 
     private final UniqueList<Person> persons;
-
     private HashMap<String, SuperGroup> superGroups;
-
     private HashMap<String, SubGroup> subGroups;
+    private final UniqueList<Tag> tags;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -34,6 +34,7 @@ public class Notor implements ReadOnlyNotor {
         persons = new UniqueList<>();
         superGroups = new HashMap<>();
         subGroups = new HashMap<>();
+        tags = new UniqueList<>();
     }
 
     public Notor() {}
