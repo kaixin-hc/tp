@@ -37,8 +37,18 @@ public class Person implements Unique<Person> {
     /**
      * Every field must be present and not null.
      */
+    public Person(Name name, Phone phone, Email email) {
+        requireAllNonNull(name, phone, email);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
     public Person(Name name, Phone phone, Email email, Note note) {
-        requireAllNonNull(name, phone, email, tags);
+        requireAllNonNull(name, phone, email, note);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -152,7 +162,7 @@ public class Person implements Unique<Person> {
      * @param superGroup the name of the SuperGroup to be removed to that person.
      * @throws ItemNotFoundException if person is not in in the group.
      */
-    private void removeSuperGroup(String superGroup) throws ItemNotFoundException {
+    public void removeSuperGroup(String superGroup) throws ItemNotFoundException {
         if (!superGroups.contains(superGroup)) {
             throw new ItemNotFoundException();
         }

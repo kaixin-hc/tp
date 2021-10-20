@@ -21,6 +21,7 @@ public class Notor implements ReadOnlyNotor {
 
     private final UniqueList<Person> persons;
     private final UniqueList<SuperGroup> superGroups;
+    private final UniqueList<Tag> tags;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication

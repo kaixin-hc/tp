@@ -67,7 +67,7 @@ public class PersonCreateCommandParser extends PersonCommandParser {
             index = ParserUtil.parseGroupIndex(argMultimap.getValue(PREFIX_GROUPINDEX).get());
         }
 
-        Person person = new Person(name, phone, email, tagList);
+        Person person = new Person(name, phone, email);
 
         return new PersonCreateCommand(index, person);
     }
