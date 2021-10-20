@@ -3,7 +3,6 @@ package seedu.notor.testutil;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.notor.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.notor.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -14,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.notor.model.Notor;
-import seedu.notor.model.group.SubGroup;
 import seedu.notor.model.group.SuperGroup;
 import seedu.notor.model.person.Person;
 
@@ -65,7 +63,7 @@ public class TypicalPersons {
             .withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB)
+    public static final Person BOB = new PersonBuilder().withName("Bob")
             .withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
@@ -79,17 +77,14 @@ public class TypicalPersons {
      * Returns an {@code Notor} with all the typical persons.
      */
     public static Notor getTypicalNotor() {
-        Notor ab = new Notor();
+        Notor notor = new Notor();
         for (SuperGroup superGroup: TypicalGroups.getSuperGroups()) {
-            ab.addSuperGroup(superGroup);
-        }
-        for (SubGroup subGroup: TypicalSubGroups.getSubGroups()) {
-            ab.addSubGroup(subGroup);
+            notor.addSuperGroup(superGroup);
         }
         for (Person person : getTypicalPersons()) {
-            ab.addPerson(person);
+            notor.addPerson(person);
         }
-        return ab;
+        return notor;
     }
 
     public static List<Person> getTypicalPersons() {

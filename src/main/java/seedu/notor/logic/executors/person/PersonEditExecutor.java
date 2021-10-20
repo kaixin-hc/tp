@@ -9,9 +9,9 @@ import seedu.notor.commons.core.index.Index;
 import seedu.notor.commons.util.CollectionUtil;
 import seedu.notor.logic.commands.CommandResult;
 import seedu.notor.logic.executors.exceptions.ExecuteException;
+import seedu.notor.model.common.Name;
+import seedu.notor.model.common.Note;
 import seedu.notor.model.person.Email;
-import seedu.notor.model.person.Name;
-import seedu.notor.model.person.Note;
 import seedu.notor.model.person.Person;
 import seedu.notor.model.person.Phone;
 
@@ -27,7 +27,7 @@ public class PersonEditExecutor extends PersonExecutor {
     /**
      * Constructor for a PersonEditExecutor instance.
      *
-     * @param index Index of the person to be edited.
+     * @param index                Index of the person to be edited.
      * @param personEditDescriptor Descriptor for the edited person.
      */
     public PersonEditExecutor(Index index, PersonEditDescriptor personEditDescriptor) {
@@ -93,7 +93,8 @@ public class PersonEditExecutor extends PersonExecutor {
         private Email email;
         private Note note;
 
-        public PersonEditDescriptor() {}
+        public PersonEditDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -140,6 +141,7 @@ public class PersonEditExecutor extends PersonExecutor {
         public void setNote(Note note) {
             this.note = note;
         }
+
         public Optional<Note> getNote() {
             return Optional.ofNullable(note);
         }
@@ -158,7 +160,6 @@ public class PersonEditExecutor extends PersonExecutor {
 
             // state check
             PersonEditDescriptor e = (PersonEditDescriptor) other;
-
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail());
