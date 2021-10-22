@@ -29,7 +29,7 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_NOTE = BENSON.getNote().toString();
     private static final String VALID_NOTE_DATE = BENSON.getNote().getSavedDate();
     private static final List<String> VALID_GROUPS = new ArrayList<>(BENSON.getSuperGroups());
-    private static final List<String> VALID_SUBGROUPS = new ArrayList<>(BENSON.getSubGroups());
+    private static final List<String> VALID_SUBGROUPS = new ArrayList<>(BENSON.getDisplaySubGroups());
     private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
@@ -68,29 +68,11 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_nullPhone_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, null, VALID_EMAIL, VALID_NOTE, VALID_NOTE_DATE, VALID_TAGS,
-                        VALID_GROUPS, VALID_SUBGROUPS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
     public void toModelType_invalidEmail_throwsIllegalValueException() {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, INVALID_EMAIL, VALID_NOTE, VALID_NOTE_DATE, VALID_TAGS,
                         VALID_GROUPS, VALID_SUBGROUPS);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_nullEmail_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_NOTE, VALID_NOTE_DATE, VALID_TAGS,
-                        VALID_GROUPS, VALID_SUBGROUPS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
